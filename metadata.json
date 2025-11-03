@@ -1,0 +1,8 @@
+{
+  "name": "ToolsGalaxy",
+  "description": "A comprehensive suite of online tools for documents, images, media, and more. Includes an AI Image Editor powered by Gemini, PDF converters, image utilities, and other helpful productivity tools.",
+  "requestFramePermissions": [
+    "microphone",
+    "camera"
+  ]
+}
