@@ -27,7 +27,6 @@ export default defineConfig(({ mode }) => {
             manualChunks: undefined,
           }
         }
-      },
-      base: './'
+      }
     };
 });

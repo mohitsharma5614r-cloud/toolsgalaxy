@@ -150,6 +150,7 @@ export const PersonalityTest: React.FC<{ title: string }> = ({ title }) => {
     if (status === 'result' && resultType) {
         const resultData = personalityTypes[resultType];
         return (
+            <>
             <div className="max-w-3xl mx-auto animate-fade-in p-8 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
                 <div className="text-center">
                     <h2 className="text-2xl font-bold text-slate-500 dark:text-slate-400">Your Personality Type is:</h2>
@@ -179,12 +180,7 @@ export const PersonalityTest: React.FC<{ title: string }> = ({ title }) => {
                     <button onClick={handleReset} className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md">Take the Test Again</button>
                 </div>
             </div>
-        );
-    }
-
-    return null;
-};
-<style>{`
+            <style>{`
     @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .animate-fade-in { animation: fade-in 0.5s ease-out forwards; }
     .brain-loader {
@@ -211,3 +207,9 @@ export const PersonalityTest: React.FC<{ title: string }> = ({ title }) => {
     .p3 { animation-delay: -1.2s; }
     .p4 { animation-delay: -1.8s; }
 `}</style>
+            </>
+        );
+    }
+
+    return null;
+};
