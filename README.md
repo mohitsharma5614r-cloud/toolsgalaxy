@@ -1,20 +1,55 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Toolsgalaxy
 
-# Run and deploy your AI Studio app
+A powerful collection of AI tools designed for developers, students, and professionals. This project includes multiple AI-powered features to help automate workflows, generate content, and boost productivity.
 
-This contains everything you need to run your app locally.
+## 🚀 Features
 
-View your app in AI Studio: https://ai.studio/apps/drive/1iPZESHcHb094u320CNWMRCxRcGYcOW8A
+* 1000+ online tool with AI
+* Chat assistant
+* Image creation
+* Developer utilities
+* Productivity boosters
 
-## Run Locally
+## 📂 Project Structure
 
-**Prerequisites:**  Node.js
+```
+E:\download1\toolsgalaxy
+│
+├── src/
+├── public/
+├── package.json
+├── README.md
+└── ... other files
+```
 
+## 🔧 Installation
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+git clone https://github.com/mohitsharma5614r-cloud/toolsgalaxy.git
+cd toolsgalaxy
+npm install
+npm run dev
+```
+
+## 🛠️ Technologies Used
+
+* React
+* TypeScript
+* Node.js
+* AI APIs
+
+## 🤝 Contributing
+
+Pull requests are welcome! Please ensure changes are well-tested.
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👤 Author
+
+**Mohit Sharma**
+
+---
+
+If you like this project, don't forget to ⭐ the repository!
