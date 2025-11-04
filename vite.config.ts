@@ -24,7 +24,10 @@ export default defineConfig(({ mode }) => {
         assetsDir: 'assets',
         rollupOptions: {
           output: {
-            manualChunks: undefined,
+            // Split common vendor libraries into a separate chunk to reduce main bundle size
+            manualChunks: {
+              vendor: ['react', 'react-dom']
+            },
           }
         }
       }
