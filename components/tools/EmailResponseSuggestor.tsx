@@ -80,4 +80,52 @@ export const EmailResponseSuggestor: React.FC<{ title: string }> = ({ title }) =
                         <label>Email you received:</label>
                         <textarea value={receivedEmail} onChange={e => setReceivedEmail(e.target.value)} rows={6} placeholder="Paste the email here..." className="input-style w-full"/>
                         <label>Main point of your reply:</label>
-                        <textarea value={context} onChange={e => setContext
+                        <textarea value={context} onChange={e => setContext(e.target.value)} rows={4} placeholder="What is the main point you want to convey?" className="input-style w-full"/>
+                        <label>Desired tone:</label>
+                        <div className="flex flex-wrap gap-2">
+                            {tones.map(t => (
+                                <button key={t} onClick={() => setTone(t)} className={`btn-toggle ${tone === t ? 'btn-selected' : ''}`}>{t}</button>
+                            ))}
+                        </div>
+                        <button onClick={handleGenerate} disabled={isLoading} className="w-full btn-primary text-lg !mt-4">
+                            {isLoading ? 'Generating...' : 'Generate Replies'}
+                        </button>
+                    </div>
+
+                    <div className="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg border space-y-4">
+                        <h2 className="text-xl font-bold">2. Suggestions</h2>
+                        {isLoading ? (
+                            <div className="min-h-[250px] flex items-center justify-center"><Loader /></div>
+                        ) : suggestions.length ? (
+                            <div className="space-y-4 animate-fade-in">
+                                {suggestions.map((s, idx) => (
+                                    <div key={idx} className="p-4 bg-slate-100 dark:bg-slate-700/50 rounded-lg">
+                                        <div className="flex justify-between items-center mb-2">
+                                            <h3 className="font-semibold">Option {idx + 1}</h3>
+                                            <CopyButton textToCopy={s} />
+                                        </div>
+                                        <pre className="whitespace-pre-wrap font-sans text-sm">{s}</pre>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-slate-500 dark:text-slate-400">Your AI-generated replies will appear here.</p>
+                        )}
+                    </div>
+                </div>
+            </div>
+            {error && <Toast message={error} onClose={() => setError(null)} />}
+            <style>{`
+                .label-style { display: block; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 500; }
+                .input-style { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 0.5rem; padding: 0.75rem; }
+                .dark .input-style { background: #1e293b; border-color: #475569; color: white; }
+                .btn-primary { background: #4f46e5; color: white; border-radius: 0.5rem; font-weight: 600; padding: 0.75rem 1.5rem; }
+                .btn-toggle { padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 600; background-color: #e2e8f0; }
+                .dark .btn-toggle { background-color: #334155; }
+                .btn-selected { background-color: #4f46e5; color: white; }
+                @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+                .animate-fade-in { animation: fade-in 0.5s ease-out; }
+            `}</style>
+        </>
+    );
+};

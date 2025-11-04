@@ -165,3 +165,4 @@ export const FutureFaceGenerator: React.FC = () => {
             `}</style>
         </>
     );
+};

@@ -180,4 +180,20 @@ export const AiBeardTryOnTool: React.FC<{ title: string }> = ({ title }) => {
                                     </div>
                                 </div>
                             ) : (
-                                <img src={originalImage.url} alt="Original" className="max-w-full
+                                <img src={originalImage.url} alt="Original" className="max-w-full h-auto max-h-[60vh] rounded-lg shadow-md" />
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
+            {error && <Toast message={error} onClose={() => setError(null)} />}
+            <style>{`
+                .btn-primary { background-color: #4f46e5; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; text-decoration: none; display: inline-block; cursor: pointer; }
+                .btn-primary:disabled { background-color: #9ca3af; cursor: not-allowed; }
+                .btn-secondary { background-color: #64748b; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; }
+                @keyframes fade-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+                .animate-fade-in { animation: fade-in 0.5s ease-out forwards; }
+            `}</style>
+        </>
+    );
+};
