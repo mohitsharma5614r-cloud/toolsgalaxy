@@ -971,6 +971,7 @@ function App() {
         onGoHome={goHome} 
         showHomeButton={appState !== 'home'}
         onSelectTool={handleSelectTool}
+        onSelectCategory={handleSelectCategory}
       />
       <main className="flex-grow container mx-auto px-4 md:px-8 py-8">
         {appState !== 'home' && <Breadcrumb crumbs={breadcrumbs} />}

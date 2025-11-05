@@ -22,11 +22,14 @@ export default defineConfig(({ mode }) => {
       build: {
         outDir: 'dist',
         assetsDir: 'assets',
+        chunkSizeWarningLimit: 1000,
         rollupOptions: {
           output: {
             // Split common vendor libraries into a separate chunk to reduce main bundle size
             manualChunks: {
-              vendor: ['react', 'react-dom']
+              vendor: ['react', 'react-dom'],
+              pdf: ['jspdf', 'jspdf-autotable'],
+              utils: ['jszip']
             },
           }
         }
