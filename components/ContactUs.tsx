@@ -28,21 +28,21 @@ export const ContactUs: React.FC = () => {
             <div className="flex items-start gap-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mt-1 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                 <div>
-                    <h3 className="font-semibold">Email</h3>
+                    <h3 className="font-semibold text-slate-900 dark:text-white">Email</h3>
                     <a href="mailto:contact@toolsgalaxy.com" className="text-indigo-500 hover:underline">contact@toolsgalaxy.com</a>
                 </div>
             </div>
              <div className="flex items-start gap-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mt-1 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 <div>
-                    <h3 className="font-semibold">Address</h3>
-                    <p className="text-slate-500 dark:text-slate-400">123 Starship Lane, Orion Nebula</p>
+                    <h3 className="font-semibold text-slate-900 dark:text-white">Address</h3>
+                    <p className="text-slate-500 dark:text-slate-400">Mehgaon, Madhya Pradesh</p>
                 </div>
             </div>
              <div className="flex items-start gap-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mt-1 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4c0-1.144.465-2.166 1.228-2.933zM6.5 21v-2a4 4 0 014-4h3a4 4 0 014 4v2" /></svg>
                 <div>
-                    <h3 className="font-semibold">Social Media</h3>
+                    <h3 className="font-semibold text-slate-900 dark:text-white">Social Media</h3>
                     <div className="flex gap-4 mt-2">
                         <a href="#" className="text-slate-500 hover:text-indigo-500">Twitter</a>
                         <a href="#" className="text-slate-500 hover:text-indigo-500">GitHub</a>
