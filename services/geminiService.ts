@@ -2,59 +2,77 @@ import { GoogleGenAI, Modality, GenerateContentResponse, Type } from "@google/ge
 
 const API_KEY = process.env.API_KEY;
 
-if (!API_KEY) {
-  throw new Error("API_KEY environment variable not set");
-}
+// Initialize AI client only if API key is available
+const ai = API_KEY ? new GoogleGenAI({ apiKey: API_KEY }) : null;
 
-const ai = new GoogleGenAI({ apiKey: API_KEY });
+// Helper to check if API is available
+function ensureApiAvailable() {
+  if (!ai || !API_KEY) {
+    throw new Error("AI service is currently unavailable. Please try again later.");
+  }
+}
 
 // --- Helper for JSON responses ---
 async function generateJson(model: string, contents: any, responseSchema: any) {
-    const response = await ai.models.generateContent({
-        model,
-        contents,
-        config: {
-            responseMimeType: "application/json",
-            responseSchema,
-        },
-    });
-    const jsonText = response.text.trim();
-    return JSON.parse(jsonText);
+    ensureApiAvailable();
+    try {
+        const response = await ai!.models.generateContent({
+            model,
+            contents,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema,
+            },
+        });
+        const jsonText = response.text.trim();
+        return JSON.parse(jsonText);
+    } catch (error) {
+        throw new Error("Unable to process your request. Please try again.");
+    }
 }
 
 // --- Helper for Text-only responses ---
 async function generateText(model: string, contents: any): Promise<string> {
-    const response = await ai.models.generateContent({ model, contents });
-    const text = response.text;
-    if (text) {
-        return text;
-    } else {
-        throw new Error("The model did not return any text.");
+    ensureApiAvailable();
+    try {
+        const response = await ai!.models.generateContent({ model, contents });
+        const text = response.text;
+        if (text) {
+            return text;
+        } else {
+            throw new Error("Unable to generate content. Please try again.");
+        }
+    } catch (error) {
+        throw new Error("Unable to process your request. Please try again.");
     }
 }
 
 // --- Helper for Image-to-Image responses ---
 async function generateImageFromImage(model: string, base64ImageData: string, mimeType: string, textPrompt: string): Promise<string | null> {
-    const response: GenerateContentResponse = await ai.models.generateContent({
-      model,
-      contents: {
-        parts: [
-          { inlineData: { data: base64ImageData, mimeType } },
-          { text: textPrompt },
-        ],
-      },
-      config: {
-        responseModalities: [Modality.IMAGE],
-      },
-    });
+    ensureApiAvailable();
+    try {
+        const response: GenerateContentResponse = await ai!.models.generateContent({
+          model,
+          contents: {
+            parts: [
+              { inlineData: { data: base64ImageData, mimeType } },
+              { text: textPrompt },
+            ],
+          },
+          config: {
+            responseModalities: [Modality.IMAGE],
+          },
+        });
 
-    for (const part of response.candidates?.[0]?.content?.parts || []) {
-      if (part.inlineData) {
-        return part.inlineData.data;
-      }
+        for (const part of response.candidates?.[0]?.content?.parts || []) {
+          if (part.inlineData) {
+            return part.inlineData.data;
+          }
+        }
+        throw new Error("Unable to generate image. Please try a different prompt or image.");
+    } catch (error) {
+        throw new Error("Image processing failed. Please try again with a different image.");
     }
-    console.error("No image data found in API response", response);
-    throw new Error("The model did not return an image. Please try a different prompt or image.");
 }
 
 // --- Existing & Fixed Functions ---
@@ -63,17 +81,14 @@ export async function editImageWithPrompt(base64ImageData: string, mimeType: str
   try {
     return await generateImageFromImage('gemini-2.5-flash-image', base64ImageData, mimeType, prompt);
   } catch (error) {
-    console.error("Error calling Gemini API:", error);
-    if (error instanceof Error) {
-        throw new Error(`Failed to edit image: ${error.message}`);
-    }
-    throw new Error("An unknown error occurred while communicating with the API.");
+    throw new Error("Failed to edit image. Please try again.");
   }
 }
 
 export async function eraseObjectInImage(base64ImageData: string, mimeType: string, maskBase64: string): Promise<string | null> {
+  ensureApiAvailable();
   try {
-    const response: GenerateContentResponse = await ai.models.generateContent({
+    const response: GenerateContentResponse = await ai!.models.generateContent({
       model: 'gemini-2.5-flash-image',
       contents: {
         parts: [
@@ -88,10 +103,9 @@ export async function eraseObjectInImage(base64ImageData: string, mimeType: stri
     for (const part of response.candidates?.[0]?.content?.parts || []) {
       if (part.inlineData) { return part.inlineData.data; }
     }
-    throw new Error("The model did not return an image.");
+    throw new Error("Failed to erase object. Please try again.");
   } catch (error) {
-    console.error("Error calling Gemini API for object removal:", error);
-    throw new Error(`Failed to erase object: ${error instanceof Error ? error.message : 'Unknown API error'}`);
+    throw new Error("Failed to erase object. Please try again.");
   }
 }
 
@@ -155,19 +169,24 @@ export async function generateResumeContent(name: string, jobTitle: string, skil
 // --- NEWLY ADDED FUNCTIONS ---
 
 export async function swapFaces(sourceBase64: string, sourceMimeType: string, targetBase64: string, targetMimeType: string): Promise<string | null> {
-    const response: GenerateContentResponse = await ai.models.generateContent({
-        model: 'gemini-2.5-flash-image',
-        contents: {
-            parts: [
-                { inlineData: { data: sourceBase64, mimeType: sourceMimeType } },
-                { inlineData: { data: targetBase64, mimeType: targetMimeType } },
-                { text: "Take the face from the first image and swap it onto the most prominent person in the second image. Blend it realistically." }
-            ]
-        },
-        config: { responseModalities: [Modality.IMAGE] }
-    });
-    for (const part of response.candidates?.[0]?.content?.parts || []) { if (part.inlineData) return part.inlineData.data; }
-    throw new Error("AI failed to swap faces.");
+    ensureApiAvailable();
+    try {
+        const response: GenerateContentResponse = await ai!.models.generateContent({
+            model: 'gemini-2.5-flash-image',
+            contents: {
+                parts: [
+                    { inlineData: { data: sourceBase64, mimeType: sourceMimeType } },
+                    { inlineData: { data: targetBase64, mimeType: targetMimeType } },
+                    { text: "Take the face from the first image and swap it onto the most prominent person in the second image. Blend it realistically." }
+                ]
+            },
+            config: { responseModalities: [Modality.IMAGE] }
+        });
+        for (const part of response.candidates?.[0]?.content?.parts || []) { if (part.inlineData) return part.inlineData.data; }
+        throw new Error("Failed to swap faces. Please try again.");
+    } catch (error) {
+        throw new Error("Failed to swap faces. Please try again.");
+    }
 }
 
 export async function genderSwapImage(base64: string, mimeType: string, targetGender: 'male' | 'female'): Promise<string | null> {
@@ -191,15 +210,20 @@ export async function changeExpression(base64: string, mimeType: string, express
 }
 
 export async function generateThumbnailOrBanner(prompt: string, aspectRatio: string): Promise<string | null> {
-    const response = await ai.models.generateImages({
-        model: 'imagen-4.0-generate-001',
-        prompt: `YouTube thumbnail, banner image: ${prompt}. Cinematic, eye-catching, high contrast, vibrant colors.`,
-        config: { numberOfImages: 1, outputMimeType: 'image/jpeg', aspectRatio },
-    });
-    if (response.generatedImages && response.generatedImages.length > 0) {
-        return response.generatedImages[0].image.imageBytes;
+    ensureApiAvailable();
+    try {
+        const response = await ai!.models.generateImages({
+            model: 'imagen-4.0-generate-001',
+            prompt: `YouTube thumbnail, banner image: ${prompt}. Cinematic, eye-catching, high contrast, vibrant colors.`,
+            config: { numberOfImages: 1, outputMimeType: 'image/jpeg', aspectRatio },
+        });
+        if (response.generatedImages && response.generatedImages.length > 0) {
+            return response.generatedImages[0].image.imageBytes;
+        }
+        throw new Error("Failed to generate image. Please try again.");
+    } catch (error) {
+        throw new Error("Failed to generate image. Please try again.");
     }
-    throw new Error("AI failed to generate an image.");
 }
 
 export interface QuizQuestion { question: string; options: string[]; answer: string; }
@@ -525,13 +549,18 @@ export async function generateFeedbackForm(topic: string, formType: string): Pro
 }
 
 export async function generateTattooDesign(idea: string, style: string): Promise<string | null> {
-    const response = await ai.models.generateImages({
-        model: 'imagen-4.0-generate-001',
-        prompt: `A clean, black and white tattoo design of ${idea} in a ${style} style. Minimalist, on a plain white background, suitable for a tattoo stencil.`,
-        config: { numberOfImages: 1, outputMimeType: 'image/jpeg', aspectRatio: '1:1' },
-    });
-    if (response.generatedImages?.[0]) { return response.generatedImages[0].image.imageBytes; }
-    throw new Error("AI failed to generate a tattoo design.");
+    ensureApiAvailable();
+    try {
+        const response = await ai!.models.generateImages({
+            model: 'imagen-4.0-generate-001',
+            prompt: `A clean, black and white tattoo design of ${idea} in a ${style} style. Minimalist, on a plain white background, suitable for a tattoo stencil.`,
+            config: { numberOfImages: 1, outputMimeType: 'image/jpeg', aspectRatio: '1:1' },
+        });
+        if (response.generatedImages?.[0]) { return response.generatedImages[0].image.imageBytes; }
+        throw new Error("Failed to generate tattoo design. Please try again.");
+    } catch (error) {
+        throw new Error("Failed to generate tattoo design. Please try again.");
+    }
 }
 
 export async function generateUsernames(keyword: string, style: string): Promise<string[]> {
@@ -543,42 +572,57 @@ export async function generateWallpaper(prompt: string, aspectRatio: string): Pr
 }
 
 export async function generateLogo(brandName: string, keywords: string, style: string): Promise<string | null> {
-    const response = await ai.models.generateImages({
-        model: 'imagen-4.0-generate-001',
-        prompt: `A simple, modern, minimalist logo icon for a brand named '${brandName}'. The logo should represent: ${keywords}. Style: ${style}. Vector style, on a plain white background.`,
-        config: { numberOfImages: 1, outputMimeType: 'image/jpeg', aspectRatio: '1:1' },
-    });
-    if (response.generatedImages?.[0]) { return response.generatedImages[0].image.imageBytes; }
-    throw new Error("AI failed to generate a logo.");
+    ensureApiAvailable();
+    try {
+        const response = await ai!.models.generateImages({
+            model: 'imagen-4.0-generate-001',
+            prompt: `A simple, modern, minimalist logo icon for a brand named '${brandName}'. The logo should represent: ${keywords}. Style: ${style}. Vector style, on a plain white background.`,
+            config: { numberOfImages: 1, outputMimeType: 'image/jpeg', aspectRatio: '1:1' },
+        });
+        if (response.generatedImages?.[0]) { return response.generatedImages[0].image.imageBytes; }
+        throw new Error("Failed to generate logo. Please try again.");
+    } catch (error) {
+        throw new Error("Failed to generate logo. Please try again.");
+    }
 }
 
 export interface FakeIdentity { fullName: string; dateOfBirth: string; age: number; location: string; occupation: string; bio: string; image: string; }
 export async function generateFakeIdentity(): Promise<FakeIdentity> {
-    const [textResponse, imageResponse] = await Promise.all([
-        generateJson("gemini-2.5-flash", 'Generate a complete fake identity: full name, date of birth (e.g., "January 1, 1990"), age as a number, location (city, country), a plausible occupation, and a short bio.', {
-            type: Type.OBJECT, properties: {
-                fullName: { type: Type.STRING }, dateOfBirth: { type: Type.STRING }, age: { type: Type.NUMBER },
-                location: { type: Type.STRING }, occupation: { type: Type.STRING }, bio: { type: Type.STRING }
-            }
-        }),
-        ai.models.generateImages({
-            model: 'imagen-4.0-generate-001',
-            prompt: 'A realistic profile picture of a person, head and shoulders, neutral background. This person does not exist.',
-            config: { numberOfImages: 1, outputMimeType: 'image/jpeg', aspectRatio: '1:1' }
-        })
-    ]);
-    if (!imageResponse.generatedImages?.[0]) throw new Error("AI failed to generate an identity image.");
-    return { ...textResponse, image: imageResponse.generatedImages[0].image.imageBytes };
+    ensureApiAvailable();
+    try {
+        const [textResponse, imageResponse] = await Promise.all([
+            generateJson("gemini-2.5-flash", 'Generate a complete fake identity: full name, date of birth (e.g., "January 1, 1990"), age as a number, location (city, country), a plausible occupation, and a short bio.', {
+                type: Type.OBJECT, properties: {
+                    fullName: { type: Type.STRING }, dateOfBirth: { type: Type.STRING }, age: { type: Type.NUMBER },
+                    location: { type: Type.STRING }, occupation: { type: Type.STRING }, bio: { type: Type.STRING }
+                }
+            }),
+            ai!.models.generateImages({
+                model: 'imagen-4.0-generate-001',
+                prompt: 'A realistic profile picture of a person, head and shoulders, neutral background. This person does not exist.',
+                config: { numberOfImages: 1, outputMimeType: 'image/jpeg', aspectRatio: '1:1' }
+            })
+        ]);
+        if (!imageResponse.generatedImages?.[0]) throw new Error("Failed to generate identity. Please try again.");
+        return { ...textResponse, image: imageResponse.generatedImages[0].image.imageBytes };
+    } catch (error) {
+        throw new Error("Failed to generate identity. Please try again.");
+    }
 }
 
 export async function generateQuoteBackground(prompt: string): Promise<string | null> {
-     const response = await ai.models.generateImages({
-        model: 'imagen-4.0-generate-001',
-        prompt: `A beautiful, atmospheric background image suitable for a quote. Style: ${prompt}. No text.`,
-        config: { numberOfImages: 1, outputMimeType: 'image/jpeg', aspectRatio: '1:1' },
-    });
-    if (response.generatedImages?.[0]) { return response.generatedImages[0].image.imageBytes; }
-    throw new Error("AI failed to generate a background.");
+    ensureApiAvailable();
+    try {
+        const response = await ai!.models.generateImages({
+            model: 'imagen-4.0-generate-001',
+            prompt: `A beautiful, atmospheric background image suitable for a quote. Style: ${prompt}. No text.`,
+            config: { numberOfImages: 1, outputMimeType: 'image/jpeg', aspectRatio: '1:1' },
+        });
+        if (response.generatedImages?.[0]) { return response.generatedImages[0].image.imageBytes; }
+        throw new Error("Failed to generate background. Please try again.");
+    } catch (error) {
+        throw new Error("Failed to generate background. Please try again.");
+    }
 }
 
 export async function generateThumbnailCaptions(title: string, style: string): Promise<string[]> {
