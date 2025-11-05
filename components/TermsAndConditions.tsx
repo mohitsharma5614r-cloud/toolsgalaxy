@@ -2,7 +2,7 @@ import React from 'react';
 
 export const TermsAndConditions: React.FC = () => {
   return (
-    <div className="max-w-4xl mx-auto bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700">
+    <div className="max-w-4xl mx-auto bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 my-8">
       <h1 className="text-3xl font-bold mb-6">Terms & Conditions for ToolsGalaxy</h1>
       <div className="prose prose-slate dark:prose-invert max-w-none">
         <p><strong>Last Updated:</strong> October 26, 2023</p>

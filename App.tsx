@@ -889,6 +889,7 @@ function App() {
     setActiveCategory(categoryName);
     setActiveTool(null);
     setActivePage(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const handleSelectTool = useCallback((toolId: string, toolName: string) => {
@@ -896,23 +897,28 @@ function App() {
     setActiveCategory(category?.name || null);
     setActiveTool({ id: toolId, name: toolName });
     setActivePage(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
   
   const handleSelectPage = useCallback((page: string) => {
     setActiveCategory(null);
     setActiveTool(null);
     setActivePage(page);
+    // Scroll to top when page changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const goHome = useCallback(() => {
     setActiveCategory(null);
     setActiveTool(null);
     setActivePage(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
   
   const goBackToCategory = useCallback(() => {
     setActiveTool(null);
     setActivePage(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const renderContent = () => {
@@ -933,13 +939,16 @@ function App() {
         return <HomePage onSelectCategory={handleSelectCategory} onSelectTool={handleSelectTool} />;
       
       case 'page':
-        switch(activePage) {
-          case 'privacy': return <PrivacyPolicy />;
-          case 'terms': return <TermsAndConditions />;
-          case 'about': return <AboutUs />;
-          case 'contact': return <ContactUs />;
-          default: return <HomePage onSelectCategory={handleSelectCategory} onSelectTool={handleSelectTool} />;
-        }
+        // Wrap page content in a container to ensure visibility
+        return (
+          <div className="w-full">
+            {activePage === 'privacy' && <PrivacyPolicy />}
+            {activePage === 'terms' && <TermsAndConditions />}
+            {activePage === 'about' && <AboutUs />}
+            {activePage === 'contact' && <ContactUs />}
+            {!activePage && <HomePage onSelectCategory={handleSelectCategory} onSelectTool={handleSelectTool} />}
+          </div>
+        );
 
       case 'home':
       default:
