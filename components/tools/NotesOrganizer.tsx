@@ -87,7 +87,7 @@ export const NotesOrganizer: React.FC = () => {
                                 </div>
                             ) : organizedNotes ? (
                                 <div className="flex-grow flex flex-col justify-between animate-fade-in">
-                                    <div className="prose prose-slate dark:prose-invert max-w-none whitespace-pre-wrap text-left text-sm">
+                                    <div className="text-slate-800 dark:text-slate-200 leading-relaxed max-w-none whitespace-pre-wrap text-left text-sm">
                                         {organizedNotes}
                                     </div>
                                     <div className="mt-6 text-center pt-4 border-t border-slate-200 dark:border-slate-700">

@@ -116,7 +116,7 @@ export const TextHighlighter: React.FC = () => {
                                 </div>
                             ) : highlightedSentences.length > 0 ? (
                                 <div className="flex-grow flex flex-col justify-between animate-fade-in">
-                                    <div className="prose prose-slate dark:prose-invert max-w-none text-left leading-relaxed">
+                                    <div className="text-slate-800 dark:text-slate-200 leading-relaxed max-w-none text-left leading-relaxed">
                                         {highlightedContent}
                                     </div>
                                     <div className="mt-6 text-center pt-4 border-t border-slate-200 dark:border-slate-700">

@@ -119,7 +119,7 @@ export const EssayExpander: React.FC = () => {
                         <div className="m-auto"><Loader /></div>
                     ) : expandedText ? (
                         <div className="w-full animate-fade-in text-center">
-                            <div className="prose prose-slate dark:prose-invert max-w-none text-left whitespace-pre-wrap">
+                            <div className="text-slate-800 dark:text-slate-200 leading-relaxed max-w-none text-left whitespace-pre-wrap">
                                 {expandedText}
                             </div>
                             <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">

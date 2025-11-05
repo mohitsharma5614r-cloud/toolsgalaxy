@@ -145,7 +145,7 @@ export const ArticleSummarizer: React.FC = () => {
                         <div className="m-auto"><Loader /></div>
                     ) : summary ? (
                         <div className="w-full animate-fade-in text-center">
-                            <div className="prose prose-slate dark:prose-invert max-w-none text-left" dangerouslySetInnerHTML={{ __html: summary.replace(/•/g, '<li>').replace(/\n/g, '<br/>') }} />
+                            <div className="text-slate-800 dark:text-slate-200 leading-relaxed max-w-none text-left" dangerouslySetInnerHTML={{ __html: summary.replace(/•/g, '<li>').replace(/\n/g, '<br/>') }} />
                             <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
                                 <CopyButton textToCopy={summary} />
                             </div>

@@ -97,7 +97,7 @@ export const AiArticleWriter: React.FC<{ title: string }> = ({ title }) => {
                     </div>
                 ) : article ? (
                     <>
-                        <div className="prose prose-slate dark:prose-invert max-w-none whitespace-pre-wrap text-left">
+                        <div className="max-w-none whitespace-pre-wrap text-left text-slate-800 dark:text-slate-200 leading-relaxed">
                             {article}
                         </div>
                         <div className="mt-6 text-center pt-4 border-t border-slate-200 dark:border-slate-700">

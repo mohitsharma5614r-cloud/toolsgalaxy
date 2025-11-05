@@ -107,7 +107,7 @@ export const AiPresentationMaker: React.FC<{ title: string }> = ({ title }) => {
                             <div key={index} className="bg-slate-100 dark:bg-slate-900/50 rounded-lg border border-slate-200 dark:border-slate-700 p-6 text-left shadow-sm">
                                 <h3 className="text-sm font-semibold text-indigo-500 dark:text-indigo-400 uppercase tracking-wider">SLIDE {index + 1}</h3>
                                 <p className="text-xl font-bold text-slate-800 dark:text-slate-100 mt-1">{slide.title}</p>
-                                <div className="mt-4 text-slate-600 dark:text-slate-300 whitespace-pre-wrap prose prose-slate dark:prose-invert max-w-none">
+                                <div className="mt-4 text-slate-600 dark:text-slate-300 whitespace-pre-wrap text-slate-800 dark:text-slate-200 leading-relaxed max-w-none">
                                     {slide.content}
                                 </div>
                             </div>
