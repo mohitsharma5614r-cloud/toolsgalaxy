@@ -304,6 +304,10 @@ export async function generateSlogans(productInfo: string, tone: string): Promis
      return generateJson("gemini-2.5-flash", `Generate 5 catchy slogans for a product described as '${productInfo}' with a '${tone}' tone.`, { type: Type.ARRAY, items: { type: Type.STRING } });
 }
 
+export async function generateTaglines(brandInfo: string, style: string): Promise<string[]> {
+    return generateJson("gemini-2.5-flash", `Generate 8 memorable and impactful taglines for a brand described as '${brandInfo}' with a '${style}' style. Each tagline should be concise, catchy, and capture the brand essence.`, { type: Type.ARRAY, items: { type: Type.STRING } });
+}
+
 export interface EquationSolution { steps: { description: string; result: string }[]; finalAnswer: string; }
 export async function solveEquation(equation: string): Promise<EquationSolution> {
     return generateJson('gemini-2.5-pro', `Solve the algebraic equation "${equation}" for x. Provide a step-by-step breakdown and the final answer.`, {
@@ -685,6 +689,22 @@ export async function expandEssay(points: string): Promise<string> {
 
 export async function generateBookTitles(topic: string): Promise<string[]> {
     return generateJson("gemini-2.5-flash", `Generate 10 creative book titles for a book about "${topic}".`, { type: Type.ARRAY, items: { type: Type.STRING } });
+}
+
+export async function generateBlogTitles(topic: string, tone: string, keywords: string): Promise<string[]> {
+    const keywordPrompt = keywords ? ` Include these keywords where relevant: ${keywords}.` : '';
+    return generateJson("gemini-2.5-flash", `Generate 10 catchy and engaging blog post titles about "${topic}" with a ${tone} tone.${keywordPrompt} Make them click-worthy and SEO-friendly.`, { type: Type.ARRAY, items: { type: Type.STRING } });
+}
+
+export async function generateGoogleAds(product: string, audience: string, keywords: string, adType: string): Promise<{headline1: string; headline2: string; headline3: string; description1: string; description2: string}[]> {
+    const audiencePrompt = audience ? ` Target audience: ${audience}.` : '';
+    const keywordPrompt = keywords ? ` Keywords: ${keywords}.` : '';
+    return generateJson("gemini-2.5-flash", `Generate 3 Google ${adType} ad variations for "${product}".${audiencePrompt}${keywordPrompt} Each ad needs 3 headlines (max 30 chars each) and 2 descriptions (max 90 chars each). Make them compelling and action-oriented.`, {
+        type: Type.ARRAY, items: { type: Type.OBJECT, properties: {
+            headline1: { type: Type.STRING }, headline2: { type: Type.STRING }, headline3: { type: Type.STRING },
+            description1: { type: Type.STRING }, description2: { type: Type.STRING }
+        }}
+    });
 }
 
 export async function generateNewsletterNames(topic: string): Promise<string[]> {

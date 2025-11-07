@@ -251,19 +251,6 @@ export const toolData: ToolCategory[] = [
         ]
     },
     {
-        name: '🎭 Face / Avatar / Talking Head',
-        tools: [
-            { id: 'ai-talking-avatar-generator', name: 'AI Talking Avatar Generator', description: 'Create a talking avatar from a photo and a script.' },
-            { id: 'ai-face-swap-video-tool', name: 'AI Face Swap Video Tool', description: 'Swap faces in a video with another face.' },
-            { id: 'ai-lip-sync-video-maker', name: 'AI Lip Sync Video Maker', description: 'Make a photo lip-sync to an audio track.' },
-            { id: 'ai-character-animation-from-photo', name: 'AI Character Animation from Photo', description: 'Animate a character in a photo to move and talk.' },
-            { id: 'ai-cartoon-video-generator', name: 'AI Cartoon Video Generator', description: 'Turn your photos or videos into animated cartoons.' },
-            { id: 'ai-age-progression-video-builder', name: 'AI Old Age / Young Age Video Builder', description: 'Create a video showing an age progression or regression.' },
-            { id: 'ai-celebrity-voice-video-maker', name: 'AI Celebrity Voice Video Maker', description: 'Create a video with a celebrity voiceover from text.' },
-            { id: 'ai-animated-story-character-generator', name: 'AI Animated Story Character Generator', description: 'Generate and animate a character for your stories.' },
-        ]
-    },
-    {
         name: '🎵 Media & Audio Tools',
         tools: [
             { id: 'online-voice-recorder', name: 'Online Voice Recorder', description: 'Record audio directly from your microphone.' },
@@ -409,7 +396,6 @@ export const toolData: ToolCategory[] = [
             { id: 'blog-intro-maker', name: 'Blog Intro Maker', description: 'Write engaging introductions for your blog posts.' },
             { id: 'blog-outro-maker', name: 'Blog Outro Maker', description: 'Craft compelling conclusions for your articles.' },
             { id: 'short-story-generator', name: 'Short Story Generator', description: 'Generate short stories from a prompt.' },
-            { id: 'review-generator', name: 'Review Generator', description: 'Write product or service reviews easily.' },
             { id: 'news-headline-generator', name: 'News Headline Generator', description: 'Create attention-grabbing news headlines.' },
             { id: 'recipe-writer', name: 'Recipe Writer', description: 'Generate recipes for your favorite dishes.' },
             { id: 'rap-lyrics-generator', name: 'Rap Lyrics Generator', description: 'Generate rap lyrics in various styles.' },

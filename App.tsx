@@ -44,6 +44,16 @@ import { TextHighlighter } from './components/tools/TextHighlighter';
 import { MindMapMaker } from './components/tools/MindMapMaker';
 import { BrandNameFinder } from './components/tools/BrandNameFinder';
 import { SloganCreator } from './components/tools/SloganCreator';
+import { TaglineMaker } from './components/tools/TaglineMaker';
+import { BlogTitleGenerator } from './components/tools/BlogTitleGenerator';
+import { SeoScoreChecker } from './components/tools/SeoScoreChecker';
+import { KeywordDensityTool } from './components/tools/KeywordDensityTool';
+import { UtmBuilder } from './components/tools/UtmBuilder';
+import { CpmCpcCalculator } from './components/tools/CpmCpcCalculator';
+import { InfluencerCostCalculator } from './components/tools/InfluencerCostCalculator';
+import { FunnelCostCalculator } from './components/tools/FunnelCostCalculator';
+import { AffiliateEarningEstimator } from './components/tools/AffiliateEarningEstimator';
+import { GoogleAdGenerator } from './components/tools/GoogleAdGenerator';
 import { ScientificCalculator } from './components/tools/ScientificCalculator';
 import { EquationSolver } from './components/tools/EquationSolver';
 import { PeriodicTableExplorer } from './components/tools/PeriodicTableExplorer';
@@ -414,6 +424,27 @@ import { SubtitleGenerator } from './components/tools/SubtitleGenerator';
 import { InstagramReelsDownloader } from './components/tools/InstagramReelsDownloader';
 import { TikTokDownloader } from './components/tools/TikTokDownloader';
 import { YouTubeToMp4Converter } from './components/tools/YouTubeToMp4Converter';
+import { YouTubePlaylistDownloader } from './components/tools/YouTubePlaylistDownloader';
+import { YouTubeThumbnailDownloader } from './components/tools/YouTubeThumbnailDownloader';
+import { AITalkingAvatarGenerator } from './components/tools/AITalkingAvatarGenerator';
+import { PdfPageNumberAdder } from './components/tools/PDFPageNumberAdder';
+import { PdfToImage } from './components/tools/PDFToImage';
+import { PdfWatermarkAdder } from './components/tools/PDFWatermarkAdder';
+import { PdfMetadataEditor } from './components/tools/PDFMetadataEditor';
+import { PdfMergeSplitCompress } from './components/tools/PDFMergeSplitCompress';
+import { ImageToPdfConverter } from './components/tools/ImageToPDFConverter';
+import { AiConceptMapGenerator } from './components/tools/AIConceptMapGenerator';
+import { AudioSpeedController } from './components/tools/AudioSpeedController';
+import { AudioReverseTool } from './components/tools/AudioReverseTool';
+import { VideoFrameCapture } from './components/tools/VideoFrameCapture';
+import { AudioToTextSimple } from './components/tools/AudioToTextSimple';
+import { Mp3MetadataCleaner } from './components/tools/MP3MetadataCleaner';
+import { VideoToMp3Converter } from './components/tools/VideoToMP3Converter';
+import { VideoTrimmer } from './components/tools/VideoTrimmer';
+import { VideoMerger } from './components/tools/VideoMerger';
+import { WebcamRecorder } from './components/tools/WebcamRecorder';
+import { AudioPitchChanger } from './components/tools/AudioPitchChanger';
+import { Mp3TagEditor } from './components/tools/MP3TagEditor';
 import { AudioWatermarkDetector } from './components/tools/AudioWatermarkDetector';
 import { AudioToMidiConverter } from './components/tools/AudioToMidiConverter';
 import { VideoToMp3Cutter } from './components/tools/VideoToMp3Cutter';
@@ -473,6 +504,16 @@ const toolComponentMap: { [key: string]: React.FC<any> } = {
   'flashcard-generator': FlashcardMaker, // Both IDs now point to the new functional component
   'brand-name-finder': BrandNameFinder,
   'slogan-creator': SloganCreator,
+  'tagline-maker': TaglineMaker,
+  'blog-title-generator': BlogTitleGenerator,
+  'seo-score-checker': SeoScoreChecker,
+  'keyword-density-tool': KeywordDensityTool,
+  'utm-builder': UtmBuilder,
+  'cpm-cpc-calculator': CpmCpcCalculator,
+  'influencer-cost-calculator': InfluencerCostCalculator,
+  'funnel-cost-calculator': FunnelCostCalculator,
+  'affiliate-earning-estimator': AffiliateEarningEstimator,
+  'google-ad-generator': GoogleAdGenerator,
   'scientific-calculator': ScientificCalculator,
   'equation-solver': EquationSolver,
   'periodic-table-explorer': PeriodicTableExplorer,
@@ -567,10 +608,8 @@ const toolComponentMap: { [key: string]: React.FC<any> } = {
   'luxury-tax-calculator': LuxuryTaxCalculator,
   'personal-budget-planner': PersonalBudgetPlanner,
   'annual-expense-breakdown-tool': AnnualExpenseBreakdownTool,
-  'merge-split-compress-pdf': MergeSplitCompressPdf,
   'word-to-pdf': WordToPdf,
   'pdf-to-word': PdfToWord,
-  'image-to-pdf': ImageToPdf,
   'esign-pdf': EsignPdf,
   'ocr': Ocr,
   'pdf-to-ppt': PdfToPpt,
@@ -841,6 +880,26 @@ const toolComponentMap: { [key: string]: React.FC<any> } = {
   'instagram-reels-downloader': InstagramReelsDownloader,
   'tiktok-downloader': TikTokDownloader,
   'youtube-to-mp4': YouTubeToMp4Converter,
+  'youtube-playlist-downloader': YouTubePlaylistDownloader,
+  'youtube-thumbnail-downloader': YouTubeThumbnailDownloader,
+  'ai-talking-avatar-generator': AITalkingAvatarGenerator,
+  'pdf-page-number-adder': PdfPageNumberAdder,
+  'pdf-to-image': PdfToImage,
+  'pdf-watermark-adder': PdfWatermarkAdder,
+  'pdf-metadata-editor': PdfMetadataEditor,
+  'merge-split-compress-pdf': PdfMergeSplitCompress,
+  'image-to-pdf': ImageToPdfConverter,
+  'audio-speed-controller': AudioSpeedController,
+  'audio-reverse-tool': AudioReverseTool,
+  'video-frame-capture': VideoFrameCapture,
+  'audio-to-text': AudioToTextSimple,
+  'mp3-metadata-cleaner': Mp3MetadataCleaner,
+  'video-to-mp3': VideoToMp3Converter,
+  'video-trimmer': VideoTrimmer,
+  'video-merger': VideoMerger,
+  'webcam-recorder': WebcamRecorder,
+  'audio-pitch-changer': AudioPitchChanger,
+  'mp3-tag-editor': Mp3TagEditor,
   'audio-watermark-detector': AudioWatermarkDetector,
   'audio-to-midi-converter': AudioToMidiConverter,
   'video-to-mp3-cutter-direct': VideoToMp3Cutter,
