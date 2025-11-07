@@ -427,10 +427,10 @@ import { YouTubeToMp4Converter } from './components/tools/YouTubeToMp4Converter'
 import { YouTubePlaylistDownloader } from './components/tools/YouTubePlaylistDownloader';
 import { YouTubeThumbnailDownloader } from './components/tools/YouTubeThumbnailDownloader';
 import { AITalkingAvatarGenerator } from './components/tools/AITalkingAvatarGenerator';
-import { PdfPageNumberAdder } from './components/tools/PDFPageNumberAdder';
-import { PdfToImage } from './components/tools/PDFToImage';
-import { PdfWatermarkAdder } from './components/tools/PDFWatermarkAdder';
-import { PdfMetadataEditor } from './components/tools/PDFMetadataEditor';
+import { PdfPageNumberAdder } from './components/tools/PdfPageNumberAdder';
+import { PdfToImage } from './components/tools/PdfToImage';
+import { PdfWatermarkAdder } from './components/tools/PdfWatermarkAdder';
+import { PdfMetadataEditor } from './components/tools/PdfMetadataEditor';
 import { PdfMergeSplitCompress } from './components/tools/PDFMergeSplitCompress';
 import { ImageToPdfConverter } from './components/tools/ImageToPDFConverter';
 import { AiConceptMapGenerator } from './components/tools/AIConceptMapGenerator';
